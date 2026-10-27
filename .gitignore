@@ -1,0 +1,47 @@
+################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+
+#ignore thumbnails created by windows
+Thumbs.db
+
+#ignore folders
+bin/
+obj/
+packages/
+.vs/
+
+#Ignore files build by Visual Studio
+*.obj
+*.bin
+*.exe
+*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+*.dll
+*.lib
+*.sbr
+*.vs
+*.lock
+*.wsuo
+*.vsidx
+
+
+venv/
+evirtual/
+.env/
+build/
+dist/

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototipo con Bootstrap y Video Local</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* Proporción 16:9 */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+        }
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <h4>Video 1</h4>
+                <div class="video-container">
+                    <video controls>
+                        <source src="/home/leca/C-Media_Player/Media/270134%20f3ff8ba7%20a93d%204287%20b804%20339600d0f333%20cnte%202364111%20filemoon%20mp4?t=XGvI9xOmFNBYOZHadgMy4tekHuSyqFzY34Ge6GtYKEk&s=1718569666&e=43200&f=31799244&srv=01&asn=10620&sp=500" type="video/mp4">
+                        Tu navegador no soporta el elemento de video.
+                    </video>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <h4>Video 2</h4>
+                <div class="video-container">
+                    <video controls>
+                        <source src="video2.mp4" type="video/mp4">
+                        Tu navegador no soporta el elemento de video.
+                    </video>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <h4>Información 1</h4>
+                <textarea class="form-control" rows="4" id="data1" readonly>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non nulla sed dolor suscipit placerat. Donec sit amet malesuada eros. Nam sodales leo ut nisi commodo, vel lacinia dui finibus.</textarea>
+            </div>
+            <div class="col-md-6 mb-4">
+                <h4>Información 2</h4>
+                <textarea class="form-control" rows="4" id="data2" readonly>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non nulla sed dolor suscipit placerat. Donec sit amet malesuada eros. Nam sodales leo ut nisi commodo, vel lacinia dui finibus.</textarea>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <h4>Usuario y Contraseña</h4>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">Usuario</label>
+                        <input type="text" class="form-control" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" class="form-control" id="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                    <label id="accessLabel" class="ml-3">hola</label>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS y jQuery (opcional para algunos componentes de Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+
+        
+        // JavaScript aquí para manejar el formulario de inicio de sesión
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevenir el envío del formulario por defecto
+
+            // Obtener los valores de usuario y contraseña
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            // Simular un proceso de autenticación (aquí puedes agregar tu lógica real)
+            //console.log('Usuario:', username);
+            //console.log('Contraseña:', password);
+            
+
+
+            window.api.credential_manager.load_credentials().then((data) => {
+                document.getElementById('accessLabel').innerHTML = data.user + " " + data.pass;
+            });
+
+            window.api.system_nfo.get_player_info().then((data)=>{
+            document.getElementById('data1').innerHTML = JSON.stringify(data);
+            })
+            
+            
+            
+            
+            //window.api.credential_manager.save_credentials({'user':username, 'pass':password});
+
+
+        });
+    </script>
+</body>
+</html>

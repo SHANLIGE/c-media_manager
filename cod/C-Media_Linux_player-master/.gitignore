@@ -1,0 +1,14 @@
+dist/
+build/
+*.so
+*.dll
+*.dylib
+venv/
+/env
+App/__pycache__/*
+App/AppFrames/__pycache__/*
+App/AppFrames/Controllers/__pycache__/*
+App/AppFrames/Controllers/CodeReaders/__pycache__/*
+App/AppFrames/Controllers/Connection/__pycache__/*
+App/AppFrames/Controllers/Printers/__pycache__/*
+App/ConfigGUI/__pycache__/*
