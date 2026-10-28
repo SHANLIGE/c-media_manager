@@ -9,6 +9,7 @@ import os
 
 COLOR_TEXTO = "#15181a"
 
+
 class TitleBar(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
@@ -19,7 +20,7 @@ class TitleBar(QWidget):
         self.setFixedHeight(36)
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         self.setObjectName("TitleBar")
-        
+
         self.setStyleSheet(f"""
             QWidget#TitleBar {{
                 background: white;
@@ -44,19 +45,15 @@ class TitleBar(QWidget):
             QWidget#TitleBar QPushButton:hover {{
                 background: #efefef;
             }}
-
-        
         """)
 
         layout = QHBoxLayout(self)
         layout.setContentsMargins(10, 0, 10, 0)
         layout.setSpacing(8)
- 
-        
 
         # Logo
         self.logo = QLabel()
-        path = os.path.expanduser('~')+"/.config/Ciel/C-Media_Player/Media/LOGO-CMedia.png"
+        path = os.path.expanduser('~') + "/.config/Ciel/C-Media_Player/Media/LOGO-CMedia.png"
         self.logo.setPixmap(QIcon(path).pixmap(20, 20))
         layout.addWidget(self.logo)
 
@@ -71,26 +68,47 @@ class TitleBar(QWidget):
         self.btn_min.clicked.connect(self.window.showMinimized)
         layout.addWidget(self.btn_min)
 
-
-
         # Cerrar
         self.btn_close = QPushButton("✕")
         self.btn_close.setObjectName("close")
         self.btn_close.clicked.connect(self.window.close)
         layout.addWidget(self.btn_close)
 
+    # -----------------------------------------------------------------
+    # Arrastre de la ventana
+    # -----------------------------------------------------------------
+    # En Wayland una aplicacion NO puede mover su propia ventana con move():
+    # el compositor ignora la peticion. La forma correcta es pedirle al
+    # compositor que inicie el arrastre con startSystemMove(). Esto funciona
+    # tanto en Wayland como en X11, asi que es la via principal; el move()
+    # manual queda solo como respaldo si el sistema no lo soporta.
     def mousePressEvent(self, event):
-        if event.button() == Qt.LeftButton:
-            self._drag_pos = event.globalPosition().toPoint() - self.window.frameGeometry().topLeft()
+        if event.button() != Qt.LeftButton:
+            return super().mousePressEvent(event)
+
+        handle = self.window.windowHandle()
+        if handle is not None and handle.startSystemMove():
+            self._drag_pos = None
+        else:
+            # Respaldo (X11 antiguo u otras plataformas)
+            self._drag_pos = (
+                event.globalPosition().toPoint() - self.window.frameGeometry().topLeft()
+            )
+        event.accept()
+
+    def mouseMoveEvent(self, event):
+        if self._drag_pos is not None and event.buttons() & Qt.LeftButton:
+            self.window.move(event.globalPosition().toPoint() - self._drag_pos)
             event.accept()
+        else:
+            super().mouseMoveEvent(event)
+
+    def mouseReleaseEvent(self, event):
+        self._drag_pos = None
+        super().mouseReleaseEvent(event)
 
     def toggle_maximize(self):
         if self.window.isMaximized():
             self.window.showNormal()
         else:
             self.window.showMaximized()
-
-    def mouseMoveEvent(self, event):
-        if self._drag_pos is not None and event.buttons() == Qt.LeftButton:
-            self.window.move(event.globalPosition().toPoint() - self._drag_pos)
-            event.accept()  
