@@ -28,6 +28,9 @@ from .Controllers.SystemInfo import SystemInfo
 from .Controllers.AppController import AppController
 from .cierre_player import js_cierre
 
+# Manejo de contenido: copia local del servidor para trabajar sin conexion
+from .ManagementContent import resolver_url_inicio, respaldo_local
+
 import sys
 import logging
 import os
@@ -106,13 +109,19 @@ class WebViewFrame(QWidget):
         #Configuración
         self.settings = settings
 
+        # URL que se abre realmente: la del servidor o la de la copia local,
+        # segun el modo elegido en la pestaña Contenidos. settings["UrlInicio"]
+        # no se toca para que el resto (NetworkController) siga viendo la original.
+        self.url_inicio = resolver_url_inicio(self.settings["UrlInicio"])
+        self._usando_respaldo = False
+
         # Barra de Navegación
         if self.settings.get("MostrarBarraNavegacion", False):
             self.nav_bar = NavigationBar(self.view.page())
             self.mainLayout.addWidget(self.nav_bar, 0, 0)
 
         self.mainLayout.addWidget(self.view, 1, 0)
-        self.view.setUrl(QUrl(self.settings["UrlInicio"]))
+        self.view.setUrl(QUrl(self.url_inicio))
 
         self.channel = QWebChannel(self.view.page())
         self.view.loadFinished.connect(self.on_load_finished)
@@ -144,7 +153,10 @@ class WebViewFrame(QWidget):
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_F5:
-            self.view.setUrl(QUrl(self.settings["UrlInicio"]))
+            # Se vuelve a decidir: si volvio la conexion, regresa al servidor
+            self.url_inicio = resolver_url_inicio(self.settings["UrlInicio"])
+            self._usando_respaldo = False
+            self.view.setUrl(QUrl(self.url_inicio))
         event.accept()
 
     def on_load_started(self):
@@ -170,6 +182,16 @@ class WebViewFrame(QWidget):
         Carga las apis al contenedor y cambia la url de la barra de navegación
         """
         print("Web cargada")
+
+        # Si la pagina del servidor no cargo (sin red, servidor caido),
+        # se abre la copia local una sola vez en lugar de quedar en blanco.
+        if not ok and not self._usando_respaldo:
+            local = respaldo_local(self.settings["UrlInicio"])
+            if local and local != self.view.url().toString():
+                self._usando_respaldo = True
+                logging.warning(f"No cargo {self.view.url().toString()}; se abre la copia local {local}")
+                self.view.setUrl(QUrl(local))
+                return
 
         for api in list(self.apis.values()):
             api.get_event().set_page(self.view.page())
@@ -246,4 +268,3 @@ class WebViewFrame(QWidget):
 
     def close_speech_synth(self):
         self.apis["speech"].close_thread()
-

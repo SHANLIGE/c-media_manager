@@ -264,22 +264,7 @@ class WebTabFrame(QWidget):
         self.mainLayout.addLayout(fila_navbar)
         self.mainLayout.addStretch(1)
 
-        # ------------------------------------------------------------------
-        # Logo marca de agua a la derecha
-        # ------------------------------------------------------------------
-        img = QLabel()
-        logo_path = os.path.expanduser('~') + "/.config/Ciel/C-Media_Player/Media/LOGO-CMedia.png"
-        pixmap = QPixmap(logo_path)
-        if not pixmap.isNull():
-            pixmap = pixmap.scaledToWidth(110, Qt.SmoothTransformation)
-        img.setPixmap(pixmap)
-        opacidad = QGraphicsOpacityEffect(img)
-        opacidad.setOpacity(0.18)
-        img.setGraphicsEffect(opacidad)
-
-        fila_marca = QHBoxLayout()
-        fila_marca.addWidget(img, alignment=Qt.AlignRight | Qt.AlignBottom)
-        self.mainLayout.addLayout(fila_marca)
+        
 
         # ------------------------------------------------------------------
         # Guardar centrado

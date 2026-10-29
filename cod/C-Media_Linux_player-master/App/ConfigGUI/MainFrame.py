@@ -1,12 +1,11 @@
 from PySide6.QtCore import *
 from PySide6.QtWidgets import *
 from PySide6.QtGui import *
-from PySide6.QtWidgets import QApplication, QLabel, QLineEdit, QCheckBox, QPushButton, QVBoxLayout, QHBoxLayout, QGridLayout, QTabWidget, QWidget, QFrame
-from .CodeReaderTabFrame import CodeReaderTabFrame
 from .GeneralTabFrame import GeneralTabFrame
 from .WebTabFrame import WebTabFrame
 from .TitleBar import TitleBar
 from .PerifericsTabFrame import PerifericosTabFrame
+from .ManagementTabContent import ManagementTabContent
 import os
 
 
@@ -89,6 +88,7 @@ class MainFrame(QWidget):
         self.generalTab = GeneralTabFrame()
         self.webTab = WebTabFrame()
         self.periferics = PerifericosTabFrame()
+        self.contenidoTab = ManagementTabContent()
     
 
         self.tabWidget.addTab(self.generalTab, QIcon(os.path.expanduser("~") + "/.config/Ciel/C-Media_Player/images/settings_24dp_F99F04_FILL0_wght400_GRAD-25_opsz40.svg"),
@@ -98,8 +98,11 @@ class MainFrame(QWidget):
         self.tabWidget.addTab(self.webTab, QIcon(os.path.expanduser("~") + "/.config/Ciel/C-Media_Player/images/language_24dp_F99F04_FILL0_wght400_GRAD0_opsz24.svg"),
             "Web")
         
-        self.tabWidget.addTab(self.periferics, QIcon(os.path.expanduser("~") + "/.config/Ciel/C-Media_Player/images/periferics_24dp_F99F04_FILL0_wght400_GRAD-25_opsz24.svg"),
+        self.tabWidget.addTab(self.periferics, QIcon(os.path.expanduser("~") + "/.config/Ciel/C-Media_Player/images/scan_24dp_F99F04_FILL0_wght400_GRAD-25_opsz24.svg"),
             "Periféricos")
+
+        self.tabWidget.addTab(self.contenidoTab, QIcon(os.path.expanduser("~") + "/.config/Ciel/C-Media_Player/images/cloud_download_24dp_F99F04_FILL0_wght400_GRAD0_opsz24.svg"),
+            "Contenidos")
         
      
         
