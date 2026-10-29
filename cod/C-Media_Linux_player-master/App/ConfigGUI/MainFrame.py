@@ -5,7 +5,6 @@ from PySide6.QtWidgets import QApplication, QLabel, QLineEdit, QCheckBox, QPushB
 from .CodeReaderTabFrame import CodeReaderTabFrame
 from .GeneralTabFrame import GeneralTabFrame
 from .WebTabFrame import WebTabFrame
-from .PrinterTabFrame import PrinterTabFrame
 from .TitleBar import TitleBar
 from .PerifericsTabFrame import PerifericosTabFrame
 import os

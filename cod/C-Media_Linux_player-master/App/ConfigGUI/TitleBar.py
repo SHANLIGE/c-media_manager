@@ -74,14 +74,8 @@ class TitleBar(QWidget):
         self.btn_close.clicked.connect(self.window.close)
         layout.addWidget(self.btn_close)
 
-    # -----------------------------------------------------------------
-    # Arrastre de la ventana
-    # -----------------------------------------------------------------
-    # En Wayland una aplicacion NO puede mover su propia ventana con move():
-    # el compositor ignora la peticion. La forma correcta es pedirle al
-    # compositor que inicie el arrastre con startSystemMove(). Esto funciona
-    # tanto en Wayland como en X11, asi que es la via principal; el move()
-    # manual queda solo como respaldo si el sistema no lo soporta.
+
+
     def mousePressEvent(self, event):
         if event.button() != Qt.LeftButton:
             return super().mousePressEvent(event)

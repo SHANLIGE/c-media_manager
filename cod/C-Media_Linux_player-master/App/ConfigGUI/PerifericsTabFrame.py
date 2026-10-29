@@ -101,17 +101,15 @@ class PerifericosTabFrame(QWidget):
         self.mainLayout.setSpacing(12)
         self.setLayout(self.mainLayout)
 
-        # ------------------------------------------------------------------
+      
         # Seccion Impresora
-        # ------------------------------------------------------------------
         self.seccion_impresora = self._crear_seccion_impresora()
         self.seccion_impresora.setEnabled(self.has_printer)
         self.mainLayout.addWidget(self.seccion_impresora)
         self.mainLayout.addWidget(self._crear_separador())
 
-        # ------------------------------------------------------------------
+       
         # Seccion Lector
-        # ------------------------------------------------------------------
         self.seccion_lector = self._crear_seccion_lector()
         self.seccion_lector.setEnabled(self.has_reader)
         self.mainLayout.addWidget(self.seccion_lector)
@@ -119,9 +117,7 @@ class PerifericosTabFrame(QWidget):
         # Todo el espacio sobrante queda entre el contenido y el boton
         self.mainLayout.addStretch(1)
 
-        # ------------------------------------------------------------------
         # Guardar centrado
-        # ------------------------------------------------------------------
         self.save_button = self._crear_boton("Guardar")
         self.save_button.clicked.connect(self.save_settings)
         self.save_button.setMinimumWidth(260)
@@ -133,11 +129,6 @@ class PerifericosTabFrame(QWidget):
         fila_guardar.addStretch(1)
         self.mainLayout.addLayout(fila_guardar)
 
-    # -----------------------------------------------------------------
-    # Secciones
-    # -----------------------------------------------------------------
-    # Las dos secciones usan la misma cuadricula para que todo quede alineado:
-    #   col 0: caja de icono (36px) | col 1: etiqueta | col 2: campo | col 3: boton
     ALTO_CAMPO = 38
     ANCHO_ETIQUETA = 70
 
@@ -218,9 +209,8 @@ class PerifericosTabFrame(QWidget):
 
         return contenedor
 
-    # -----------------------------------------------------------------
+
     # Helpers visuales
-    # -----------------------------------------------------------------
     def _crear_boton(self, texto):
         boton = QPushButton(texto)
         boton.setCursor(Qt.PointingHandCursor)
@@ -262,9 +252,8 @@ class PerifericosTabFrame(QWidget):
             caja.setPixmap(pixmap.scaled(20, 20, Qt.KeepAspectRatio, Qt.SmoothTransformation))
         return caja
 
-    # -----------------------------------------------------------------
+
     # Logica de configuracion
-    # -----------------------------------------------------------------
     def _ruta_configuracion(self):
         """Resuelve la ruta del archivo de pantallas a partir de config.json."""
         with open(BASE_DIR + "/configs/config.json", "r") as file:
