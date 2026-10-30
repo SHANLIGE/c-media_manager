@@ -58,7 +58,7 @@ class TitleBar(QWidget):
         layout.addWidget(self.logo)
 
         # Nombre de la aplicación
-        self.title = QLabel("C-Media Player · Configuración")
+        self.title = QLabel("C-Media Player · Manager")
         layout.addWidget(self.title)
 
         layout.addStretch()
