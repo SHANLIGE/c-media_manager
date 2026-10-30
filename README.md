@@ -111,10 +111,7 @@ PySide6.QtWebEngineWidgets, cryptography.fernet, cv2, netifaces, psutil, gtts
 
 ## Visuals 
 ---
-<img width="799" height="497" alt="Captura desde 2026-07-10 07-58-35" src="https://github.com/user-attachments/assets/bceb86b9-676e-4247-8c9d-3a3e04522827" />
-<img width="796" height="500" alt="Captura desde 2026-09-01 09-58-23" src="https://github.com/user-attachments/assets/f0d6150c-99ee-40e5-80e2-b62c3c0da5e5" />
-<img width="799" height="497" alt="Captura desde 2026-07-10 07-59-25" src="https://github.com/user-attachments/assets/4b073895-7cd0-4231-838b-6c0147105cdc" />
-<img width="799" height="497" alt="Captura desde 2026-07-10 07-59-56" src="https://github.com/user-attachments/assets/2f2fd204-6b84-4a7b-b09c-d8704c9b728c" />
+
 
 ## Autores 🖌️
 
